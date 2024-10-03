@@ -19,6 +19,12 @@ def browser():
     else:
         options.binary_location = chrome_path_ci
 
+    if os.getenv('CI'):
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+
     driver = webdriver.Chrome(service=service, options=options)
     yield driver
     driver.quit()
