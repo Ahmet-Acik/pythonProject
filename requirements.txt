@@ -4,3 +4,4 @@ selenium
 requests
 sqlalchemy
 webdriver_manager
+tenacity
