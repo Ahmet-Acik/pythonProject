@@ -3,3 +3,4 @@ pytest-html
 selenium
 requests
 sqlalchemy
+webdriver_manager

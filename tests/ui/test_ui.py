@@ -3,13 +3,22 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+import os
 
 @pytest.fixture
 def browser():
     driver_path = ChromeDriverManager().install()
     service = Service(driver_path)
     options = Options()
-    options.binary_location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'  # Specify the path to the Chrome binary
+
+    chrome_path_local = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+    chrome_path_ci = '/usr/bin/google-chrome'
+
+    if os.path.exists(chrome_path_local):
+        options.binary_location = chrome_path_local
+    else:
+        options.binary_location = chrome_path_ci
+
     driver = webdriver.Chrome(service=service, options=options)
     yield driver
     driver.quit()
