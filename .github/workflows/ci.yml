@@ -22,6 +22,6 @@ jobs:
         sudo apt-get install -y google-chrome-stable
     - name: Run tests
       run: |
-        pytest
+        pytest -v
       env:
         CI: true
