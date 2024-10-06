@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import os
+import time
 
 @pytest.fixture
 def browser():
@@ -32,3 +33,17 @@ def browser():
 def test_google_search(browser):
     browser.get('https://www.google.com')
     assert 'Google' in browser.title
+
+def test_google_search_fail(browser):
+    browser.get('https://www.google.com')
+    assert 'Yahoo' not in browser.title
+
+def test_wikipedia_search(browser):
+    browser.get('https://www.wikipedia.org')
+
+    search_box = browser.find_element('name', 'search')
+    search_box.send_keys('Python (programming language)')
+    time.sleep(2)
+    search_box.submit()
+    time.sleep(2)
+    assert 'Python (programming language) - Wikipedia' in browser.title
